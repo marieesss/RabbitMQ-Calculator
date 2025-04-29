@@ -55,6 +55,17 @@ services:
     networks:
       - app_network
 
+  worker_mul:
+    container_name: worker_mul
+    build:
+      context: worker-mul
+    stop_signal: SIGINT
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app_network
+
   worker_sub:
     build:
       context: worker_sub

@@ -61,7 +61,7 @@ def get_operations():
     data = request.get_json()
     operation = data['operation']
 
-    approuved_operations = [{"key" : "addition", "routing_key": "operation.add"}, {"key" : "soustraction", "routing_key": "operation.sub"}, {"key" : "division", "routing_key": "operation.div"}]
+    approuved_operations = [{"key" : "addition", "routing_key": "operation.add"}, {"key" : "soustraction", "routing_key": "operation.sub"}, {"key" : "division", "routing_key": "operation.div"}, {"key" : "mul", "routing_key": "operation.mul"}]
 
     # Chercher l'opération dans la liste
     operation_found = None
