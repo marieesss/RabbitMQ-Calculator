@@ -27,6 +27,12 @@ services:
     stop_signal: SIGINT
     ports:
       - '8000:8000'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+        - app_network
+    
 volumes:
   postgres-db:
   rabbitmq-data:
