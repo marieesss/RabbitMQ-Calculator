@@ -22,7 +22,8 @@ services:
 
   producer: 
     build:
-      context: ./producer
+      context: producer
+      target: builder
     container_name: 'producer'
     stop_signal: SIGINT
     ports:
@@ -35,7 +36,7 @@ services:
 
   worker_sub:
     build:
-      context: ./worker_sub
+      context: worker_sub
     container_name: 'worker_sub'
     depends_on:
       rabbitmq:

@@ -6,4 +6,4 @@ COPY worker_sub.py .
 
 RUN pip install pika
 
-CMD ["python", "worker_sub.py"]
+CMD ["python", "-u", "worker_sub.py"]
