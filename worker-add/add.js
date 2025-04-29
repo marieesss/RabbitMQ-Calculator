@@ -1,32 +1,30 @@
 const amqplib = require('amqplib');
 
 const rabbitmq_url = 'amqp://admin:admin@rabbitmq:5672';
-const exchange = 'calculs'; 
-
+const exchange = 'calculs';
 const topic = 'operation.add';
+const queueName = 'queue_add';
 
 let channel;
-let queue;
 
 async function receive() {
     const connection = await amqplib.connect(rabbitmq_url);
     channel = await connection.createChannel();
 
     await channel.assertExchange(exchange, 'topic', { durable: true });
-
-    queue = await channel.assertQueue('', { exclusive: true });
-
-    process.on('SIGINT', async () => {
-        await channel.cancel(queue.queue);
-        await channel.deleteQueue(queue.queue);
-        process.exit(0);
-    });
-
-    await channel.bindQueue(queue.queue, exchange, topic);
+    await channel.assertQueue(queueName, { durable: true });
+    await channel.bindQueue(queueName, exchange, topic);
 
     console.log(`[ADD] En attente de messages sur '${topic}'...`);
 
-    channel.consume(queue.queue, consume, { noAck: false });
+    channel.consume(queueName, consume, { noAck: false });
+
+    process.on('SIGINT', async () => {
+        console.log("[ADD] Arrêt demandé. Fermeture propre...");
+        await channel.close();
+        await connection.close();
+        process.exit(0);
+    });
 }
 
 async function consume(message) {
@@ -51,7 +49,6 @@ async function consume(message) {
         channel.sendToQueue(resultQueue, Buffer.from(JSON.stringify(result)));
 
         console.log(`[ADD] Résultat envoyé : ${result.result}`);
-
         channel.ack(message);
     }
 }
