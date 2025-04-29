@@ -1,0 +1,29 @@
+services:
+  rabbitmq:
+      image: rabbitmq:3-management-alpine
+      container_name: 'rabbitmq'
+      environment:
+        RABBITMQ_DEFAULT_USER: admin
+        RABBITMQ_DEFAULT_PASS: admin
+      healthcheck:
+        test: ["CMD", "rabbitmqctl", "status"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+      ports:
+        - 5672:5672
+        - 15672:15672
+        - 15692:15692
+      volumes:
+        - rabbitmq-data:/var/lib/rabbitmq
+        - rabbitmq-log:/var/log/rabbitmq
+      networks:
+        - app_network
+
+volumes:
+  postgres-db:
+  rabbitmq-data:
+  rabbitmq-log:
+
+networks:
+  app_network:
