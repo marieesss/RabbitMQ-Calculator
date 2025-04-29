@@ -27,11 +27,19 @@ services:
     stop_signal: SIGINT
     ports:
       - '8000:8000'
+    networks:
+      - app_network
+
+  worker_add:
+    container_name: worker_add
+    build:
+      context: ./worker-add
+    stop_signal: SIGINT
     depends_on:
       rabbitmq:
         condition: service_healthy
     networks:
-        - app_network
+      - app_network
     
 volumes:
   postgres-db:
