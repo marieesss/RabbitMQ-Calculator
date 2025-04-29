@@ -15,8 +15,8 @@ print("aqui")
 # Définir la queue résultats
 queue_name = 'result_queue'
 routing_key = 'operation.result'
-exchange_name = 'calc_exchange'
-channel.exchange_declare(exchange=exchange_name, exchange_type='topic', durable=True)
+exchange_name = 'result_exchange'
+channel.exchange_declare(exchange=exchange_name, exchange_type='direct', durable=True)
 
 channel.queue_declare(queue=queue_name)
 channel.queue_bind(exchange=exchange_name, queue=queue_name, routing_key=routing_key)

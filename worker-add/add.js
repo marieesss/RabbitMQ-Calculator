@@ -2,6 +2,9 @@ const amqplib = require('amqplib');
 
 const rabbitmq_url = 'amqp://admin:admin@rabbitmq:5672';
 const exchange = 'calc_exchange';
+const result_exchange = 'result_exchange';
+const fanout_exchange ="fanout_exchange"
+
 const topic = 'operation.add';
 const queueName = 'queue_add';
 
@@ -12,8 +15,11 @@ async function receive() {
     channel = await connection.createChannel();
 
     await channel.assertExchange(exchange, 'topic', { durable: true });
+    await channel.assertExchange(fanout_exchange, 'fanout', { durable: true });
+
     await channel.assertQueue(queueName, { durable: true });
     await channel.bindQueue(queueName, exchange, topic);
+    await channel.bindQueue(queueName, fanout_exchange, '');
 
     console.log(`[ADD] En attente de messages sur '${topic}'...`);
 
@@ -44,7 +50,7 @@ async function consume(message) {
             result: n1 + n2
         };
 
-        channel.publish(exchange, 'operation.result', Buffer.from(JSON.stringify(result)));
+        channel.publish(result_exchange, 'operation.result', Buffer.from(JSON.stringify(result)));
 
         console.log(`[ADD] Résultat envoyé : ${result.result}`);
         channel.ack(message);

@@ -11,7 +11,12 @@ channel = connection.channel()
 
 # Déclarer l'exchange direct pour toutes les opérations
 exchange_name = 'calc_exchange'
+result_exchange_name="result_exchange"
+exchange_fanout = "fanout_exchange"
+
 channel.exchange_declare(exchange=exchange_name, exchange_type='topic', durable=True)
+channel.exchange_declare(exchange=exchange_fanout, exchange_type='fanout', durable=True)
+
 
 # Définir la queue sub_queue et la binder correctement
 queue_name = 'sub_queue'
@@ -19,6 +24,8 @@ routing_key = 'operation.sub'
 
 channel.queue_declare(queue=queue_name)
 channel.queue_bind(exchange=exchange_name, queue=queue_name, routing_key=routing_key)
+channel.queue_bind(exchange=exchange_fanout, queue=queue_name, routing_key='')
+
 
 # Callback pour traiter les messages
 def on_request(ch, method, properties, body):
@@ -43,7 +50,7 @@ def on_request(ch, method, properties, body):
 
         # Publier le résultat
         channel.basic_publish(
-            exchange=exchange_name,
+            exchange=result_exchange_name,
             routing_key='operation.result',
             body=json.dumps(response)
         )
