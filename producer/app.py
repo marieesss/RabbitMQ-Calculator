@@ -9,7 +9,7 @@ import random
 
 connection = None
 channel = None
-routing_key="operation.sum.*"
+routing_key="operation.add"
 exchange_name = "calc_exchange"
 
 def init_rabbitmq():
@@ -19,8 +19,12 @@ def init_rabbitmq():
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=pika.PlainCredentials("admin", "admin"),))
         channel = connection.channel()
 
+        app.logger.info("RabbitMQ initialisé avec succès.")
+
+        app.logger.info(exchange_name)
+
         # New exchange
-        channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
+        channel.exchange_declare(exchange=exchange_name, exchange_type='topic', durable=True)
 
         app.logger.info("RabbitMQ initialisé avec succès.")
 

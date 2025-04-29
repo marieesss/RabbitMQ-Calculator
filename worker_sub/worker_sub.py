@@ -11,7 +11,7 @@ channel = connection.channel()
 
 # Déclarer l'exchange direct pour toutes les opérations
 exchange_name = 'calc_exchange'
-channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
+channel.exchange_declare(exchange=exchange_name, exchange_type='topic', durable=True)
 
 # Définir la queue sub_queue et la binder correctement
 queue_name = 'sub_queue'

@@ -25,9 +25,30 @@ services:
       context: producer
       target: builder
     container_name: 'producer'
-    stop_signal: SIGINT
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     ports:
       - '8000:8000'
+    networks:
+      - app_network
+
+  worker_add:
+    container_name: worker_add
+    build:
+      context: worker-add
+    stop_signal: SIGINT
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  worker_div:
+    container_name: worker_div
+    build:
+      context: worker-div
+    stop_signal: SIGINT
     depends_on:
       rabbitmq:
         condition: service_healthy
