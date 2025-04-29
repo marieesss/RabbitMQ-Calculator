@@ -48,9 +48,7 @@ async function consume(message) {
             result: n1 * n2
         };
 
-        const resultQueue = 'results';
-        await channel.assertQueue(resultQueue, { durable: false });
-        channel.sendToQueue(resultQueue, Buffer.from(JSON.stringify(result)));
+        channel.publish(exchange, 'operation.result', Buffer.from(JSON.stringify(result)));
 
         console.log(`[MUL] Résultat envoyé : ${result.result}`);
 

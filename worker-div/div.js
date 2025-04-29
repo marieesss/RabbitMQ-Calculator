@@ -51,9 +51,7 @@ async function consume(message) {
             result: resultValue
         };
 
-        const resultQueue = 'results';
-        await channel.assertQueue(resultQueue, { durable: false });
-        channel.sendToQueue(resultQueue, Buffer.from(JSON.stringify(result)));
+        channel.publish(exchange, 'operation.result', Buffer.from(JSON.stringify(result)));
 
         console.log(`[DIV] Résultat envoyé : ${result.result}`);
         channel.ack(message);

@@ -76,6 +76,16 @@ services:
     networks:
       - app_network
 
+  worker_logs:
+    build:
+      context: worker_logs
+    container_name: 'worker_logs'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app_network
+
 volumes:
   postgres-db:
   rabbitmq-data:
