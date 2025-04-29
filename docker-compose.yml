@@ -40,7 +40,18 @@ services:
         condition: service_healthy
     networks:
       - app_network
-    
+
+  worker_div:
+    container_name: worker_div
+    build:
+      context: ./worker-div
+    stop_signal: SIGINT
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app_network
+
 volumes:
   postgres-db:
   rabbitmq-data:
