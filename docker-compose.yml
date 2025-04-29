@@ -1,29 +1,29 @@
 services:
   rabbitmq:
-      image: rabbitmq:3-management-alpine
-      container_name: 'rabbitmq'
-      environment:
-        RABBITMQ_DEFAULT_USER: admin
-        RABBITMQ_DEFAULT_PASS: admin
-      healthcheck:
-        test: ["CMD", "rabbitmqctl", "status"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-      ports:
-        - 5672:5672
-        - 15672:15672
-        - 15692:15692
-      volumes:
-        - rabbitmq-data:/var/lib/rabbitmq
-        - rabbitmq-log:/var/log/rabbitmq
-      networks:
-        - app_network
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 15692:15692
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - app_network
+
   producer: 
-    container_name: producer
     build:
-      context: producer
-      target: builder
+      context: ./producer
+    container_name: 'producer'
     stop_signal: SIGINT
     ports:
       - '8000:8000'
@@ -31,8 +31,18 @@ services:
       rabbitmq:
         condition: service_healthy
     networks:
-        - app_network
-    
+      - app_network
+
+  worker_sub:
+    build:
+      context: ./worker_sub
+    container_name: 'worker_sub'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app_network
+
 volumes:
   postgres-db:
   rabbitmq-data:
