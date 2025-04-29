@@ -19,7 +19,14 @@ services:
         - rabbitmq-log:/var/log/rabbitmq
       networks:
         - app_network
-
+  producer: 
+    container_name: producer
+    build:
+      context: producer
+      target: builder
+    stop_signal: SIGINT
+    ports:
+      - '8000:8000'
 volumes:
   postgres-db:
   rabbitmq-data:
