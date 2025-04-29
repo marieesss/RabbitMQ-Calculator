@@ -10,11 +10,11 @@ import random
 connection = None
 channel = None
 routing_key="operation.sum.*"
+exchange_name = "calc_exchange"
 
 def init_rabbitmq():
     global connection, channel
     try:
-        exchange_name = "calc_exchange"
         # Connection à RabbitMQ
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=pika.PlainCredentials("admin", "admin"),))
         channel = connection.channel()
@@ -36,8 +36,8 @@ def send_numbers():
 
     # If channel exists, send number to routing key choosen
     if channel is not None:
-        message=json.dumps({"num1" : num1, "num2" : num2})
-        channel.basic_publish(exchange="topic_exchange", routing_key=routing_key, body=message)
+        message=json.dumps({"n1" : num1, "n2" : num2})
+        channel.basic_publish(exchange=exchange_name, routing_key=routing_key, body=message)
         app.logger.info(routing_key)
         app.logger.info(message)
 
