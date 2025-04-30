@@ -18,12 +18,13 @@ def init_rabbitmq():
     global connection, channel
     try:
         # Connection à RabbitMQ
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=pika.PlainCredentials("admin", "admin"),))
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(  host='rabbitmq',
+                                        port=5672, credentials=pika.PlainCredentials("admin", "admin")
+                                    ))
         channel = connection.channel()
 
         app.logger.info("RabbitMQ initialisé avec succès.")
-
-        app.logger.info(exchange_name)
 
         # New exchange
         channel.exchange_declare(exchange=exchange_name, exchange_type='topic', durable=True)
