@@ -12,7 +12,7 @@ docker compose up --build
 ```
 
 ## Visionnage des logs
-Le contenaire worker_logs contient la trace des calculs effectués par les workers
+Le contenaire worker_logs contient la trace des calculs effectués par les workers.
 Ouvrir les logs de worker_logs
 
 ## Interface graphique
