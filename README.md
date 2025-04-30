@@ -25,5 +25,5 @@ curl --location 'http://localhost:8000/' \
 ```
 Remarque : 
 - n1 et n2 sont toujours aléatoires
-- Type d'opération accepté : addition / multiplication / soustraction / division
+- Type d'opération accepté : addition / multiplication / soustraction / division / all
 
