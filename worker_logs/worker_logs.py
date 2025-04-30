@@ -24,7 +24,6 @@ channel.queue_bind(exchange=exchange_name, queue=queue_name, routing_key=routing
 # Callback pour traiter les messages
 def on_request(ch, method, properties, body):
     try:
-        print("here")
         # Récupération des variables
         message = json.loads(body)
         n1 = message['n1']
