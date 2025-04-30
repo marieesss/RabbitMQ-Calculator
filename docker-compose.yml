@@ -87,7 +87,6 @@ services:
       - app_network
 
 volumes:
-  postgres-db:
   rabbitmq-data:
   rabbitmq-log:
 
