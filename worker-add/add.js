@@ -16,6 +16,7 @@ async function receive() {
 
     await channel.assertExchange(exchange, 'topic', { durable: true });
     await channel.assertExchange(fanout_exchange, 'fanout', { durable: true });
+    await channel.assertExchange(result_exchange, 'direct', { durable: true });
 
     await channel.assertQueue(queueName, { durable: true });
     await channel.bindQueue(queueName, exchange, topic);
