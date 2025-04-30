@@ -25,5 +25,6 @@ curl --location 'http://localhost:8000/' \
 ```
 Remarque : 
 - n1 et n2 sont toujours aléatoires
-- Type d'opération accepté : 
+- Type d'opération accepté :
+
 ![image](https://github.com/user-attachments/assets/2dbf7321-61df-47ab-8aaf-7f618b194774)
