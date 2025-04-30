@@ -14,6 +14,10 @@ docker compose up --build
 ## Visionnage des logs
 Le contenaire worker_logs contient la trace des calculs effectués par les workers.
 Ouvrir les logs de worker_logs
+```bash
+docker logs worker_logs
+```
+
 
 ## Interface graphique
 L'interface est accessible à [localhost](http://localhost:8000/)
