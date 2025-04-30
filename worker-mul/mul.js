@@ -1,0 +1,65 @@
+const amqplib = require('amqplib');
+
+const rabbitmq_url = 'amqp://admin:admin@rabbitmq:5672';
+const exchange = 'calc_exchange'; 
+const result_exchange = 'result_exchange';
+const queueName = 'queue_mul';
+const fanout_exchange ="fanout_exchange"
+
+
+
+const topic = 'operation.mul';
+
+let channel;
+let queue;
+
+async function receive() {
+    const connection = await amqplib.connect(rabbitmq_url);
+    channel = await connection.createChannel();
+
+    await channel.assertExchange(exchange, 'topic', { durable: true });
+    await channel.assertExchange(fanout_exchange, 'fanout', { durable: true });
+
+    queue = await channel.assertQueue(queueName, { exclusive: true });
+
+    process.on('SIGINT', async () => {
+        await channel.cancel(queue.queue);
+        await channel.deleteQueue(queue.queue);
+        process.exit(0);
+    });
+
+    await channel.bindQueue(queue.queue, exchange, topic);
+    await channel.bindQueue(queueName, fanout_exchange, '');
+
+
+    console.log(`[MUL] En attente de messages sur '${topic}'...`);
+
+    channel.consume(queue.queue, consume, { noAck: false });
+}
+
+async function consume(message) {
+    if (message !== null) {
+        const data = JSON.parse(message.content.toString());
+        const { n1, n2 } = data;
+
+        console.log(`[MUL] Reçu : n1 = ${n1}, n2 = ${n2}`);
+
+        const delay = Math.floor(Math.random() * 11000) + 5000;
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        const result = {
+            n1,
+            n2,
+            op: 'mul',
+            result: n1 * n2
+        };
+
+        channel.publish(result_exchange, 'operation.result', Buffer.from(JSON.stringify(result)));
+
+        console.log(`[MUL] Résultat envoyé : ${result.result}`);
+
+        channel.ack(message);
+    }
+}
+
+receive();

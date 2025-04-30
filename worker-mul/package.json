@@ -1,0 +1,15 @@
+{
+  "name": "worker-mul",
+  "version": "1.0.0",
+  "main": "mul.js",
+  "scripts": {
+    "start": "node mul.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "amqplib": "^0.10.7"
+  }
+}
