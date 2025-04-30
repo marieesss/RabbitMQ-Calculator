@@ -20,10 +20,9 @@ services:
     networks:
       - app_network
 
-  producer: 
+  producer:
     build:
       context: producer
-      target: builder
     container_name: 'producer'
     depends_on:
       rabbitmq:
@@ -83,6 +82,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    ports:
+      - '4000:4000' 
     networks:
       - app_network
 

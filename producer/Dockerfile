@@ -23,5 +23,7 @@ RUN <<EOF
 addgroup -S docker
 adduser -S --shell /bin/bash --ingroup docker vscode
 EOF
+
+RUN pip install flask pika requests
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
