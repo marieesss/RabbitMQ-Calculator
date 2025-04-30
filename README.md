@@ -23,7 +23,8 @@ curl --location 'http://localhost:8000/' \
     "operation" : "all"
 }'
 ```
-Remarque : 
+### Remarque : 
 - n1 et n2 sont toujours aléatoires
 - Type d'opération accepté : addition / multiplication / soustraction / division / all
 
+## Rapport 
