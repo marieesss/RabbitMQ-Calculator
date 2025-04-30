@@ -3,6 +3,10 @@
 RabbitMQ Calculator est un projet fonctionnant avec RabbitMQ avec un producteur et quatre consommateurs.
 Chacun d'entre eux (consumer) ayant la responsabilité du traitement d'un type de calcul (add, sub, mul, div)
 
+## Rendu projet
+Le rendu écrit est disponible dans le repository : [Rendu](./Projet RabbitMQ.pdf)
+
+
 ## Démarrage
 Pré-requis : avoir Docker installé et prêt à l'emploi
 
