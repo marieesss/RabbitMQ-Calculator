@@ -18,6 +18,8 @@ Ouvrir les logs de worker_logs
 ## Interface graphique
 L'interface est accessible à [localhost](http://localhost:8000/)
 
+![image](https://github.com/user-attachments/assets/b25e66be-bb2d-48ee-9c8f-0ccd351aef22)
+
 ## Effectué une requête manuelle
 Pour pousser un type de rêquete manuellement 
 ```bash
