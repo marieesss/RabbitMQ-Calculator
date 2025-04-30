@@ -16,7 +16,7 @@ Le contenaire worker_logs contient la trace des calculs effectués par les worke
 Ouvrir les logs de worker_logs
 
 ## Interface graphique
-l'interface est accessible à [localhost](http://localhost:8000/)
+L'interface est accessible à [localhost](http://localhost:8000/)
 
 ## Effectué une requête manuelle
 Pour pousser un type de rêquete manuellement 
