@@ -26,5 +26,8 @@ curl --location 'http://localhost:8000/' \
 Remarque : 
 - n1 et n2 sont toujours aléatoires
 - Type d'opération accepté :
+addtion
+multiplication
+soustraction
+division
 
-![image](https://github.com/user-attachments/assets/2dbf7321-61df-47ab-8aaf-7f618b194774)
