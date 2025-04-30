@@ -13,6 +13,7 @@ docker compose up --build
 
 ## Visionnage des logs
 Le contenaire worker_logs contient la trace des calculs effectués par les workers
+Ouvrir les logs de worker_logs
 
 ## Effectué une requête manuelle
 Pour pousser un type de rêquete manuellement 
